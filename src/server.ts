@@ -13,6 +13,8 @@ import { createInvite } from "./routes/create-invite";
 import { updateTrip } from "./routes/udpdate-trip";
 import { getTripsDetails } from "./routes/get-trip-details";
 import { getParticipant } from "./routes/get-participant";
+import { errorHandler } from "./error-handler";
+import { env } from "./env";
 
 
 
@@ -20,12 +22,13 @@ import { getParticipant } from "./routes/get-participant";
 const app = fastify()
 
 app.register(cors, {
-    origin:"http://localhost:3000"
+    origin:`${env.WEB_BASE_URL}`
 })
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
+app.setErrorHandler(errorHandler)
 
 app.register(createTrip)
 app.register(createActivity)
@@ -42,7 +45,7 @@ app.register(getTripsDetails)
 
 
 
-app.listen({port:3333}).then(() =>{
+app.listen({port:env.PORT}).then(() =>{
     console.log("Servidor iniciado");
     
 })

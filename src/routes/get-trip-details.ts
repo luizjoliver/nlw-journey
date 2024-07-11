@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { prisma } from '../lib/prisma'
+import { ClientError } from '../errors/client-errors'
 
 
 export async function getTripsDetails(app: FastifyInstance) {
@@ -33,7 +34,7 @@ export async function getTripsDetails(app: FastifyInstance) {
          }
         })
  
-        if(!trip) throw new Error("Trip not found")
+        if(!trip) throw new ClientError("Trip not found")
  
      
  
